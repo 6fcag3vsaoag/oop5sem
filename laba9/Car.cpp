@@ -25,6 +25,6 @@ bool Car::operator==(const Car& other) const {
 
 // Оператор вывода
 std::ostream& operator<<(std::ostream& os, const Car& car) {
-    os << "Car #" << car.licensePlate;
+    os << "Автомобиль №" << car.licensePlate;
     return os;
 }

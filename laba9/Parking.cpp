@@ -9,19 +9,19 @@ Parking::Parking(int cap) : capacity(cap) {}
 bool Parking::arrive(const Car& car) {
     // Проверяем, есть ли место на стоянке
     if (isFull()) {
-        std::cout << "Parking is full. Car #" << car.getLicensePlate() << " cannot enter.\n";
+        std::cout << "Стоянка заполнена. Автомобиль №" << car.getLicensePlate() << " не может въехать.\n";
         return false;
     }
     
     parkingStack.push(car);
-    std::cout << "Car #" << car.getLicensePlate() << " has arrived and parked.\n";
+    std::cout << "Автомобиль №" << car.getLicensePlate() << " прибыл и припарковался.\n";
     return true;
 }
 
 // Отъезд автомобиля
 bool Parking::depart(int licensePlate) {
     if (isEmpty()) {
-        std::cout << "Parking is empty. No cars to depart.\n";
+        std::cout << "Стоянка пуста. Нет автомобилей для выезда.\n";
         return false;
     }
     
@@ -37,8 +37,8 @@ bool Parking::depart(int licensePlate) {
         if (car == targetCar) {
             // Найден целевой автомобиль
             found = true;
-            std::cout << "Car #" << licensePlate << " has departed. ";
-            std::cout << "It was removed " << car.getRemoveCount() << " times for other cars to exit.\n";
+            std::cout << "Автомобиль №" << licensePlate << " выехал. ";
+            std::cout << "Он был перемещен " << car.getRemoveCount() << " раз(а) для выезда других автомобилей.\n";
             break;
         } else {
             // Увеличиваем счетчик удалений для этого автомобиля
@@ -54,7 +54,7 @@ bool Parking::depart(int licensePlate) {
     }
     
     if (!found) {
-        std::cout << "Car #" << licensePlate << " not found in parking.\n";
+        std::cout << "Автомобиль №" << licensePlate << " не найден на стоянке.\n";
         return false;
     }
     
@@ -80,11 +80,11 @@ int Parking::getCurrentCount() const {
 // Вывести состояние стоянки
 void Parking::display() const {
     if (isEmpty()) {
-        std::cout << "Parking is empty.\n";
+        std::cout << "Стоянка пуста.\n";
         return;
     }
     
-    std::cout << "Parking status (" << getCurrentCount() << " cars): \n";
+    std::cout << "Состояние стоянки (" << getCurrentCount() << " автомобилей): \n";
     // Для простоты выводим только количество автомобилей
     // В реальной реализации можно было бы вывести все автомобили
 }

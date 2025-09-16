@@ -1,0 +1,31 @@
+# Компиляторы и объектные файлы
+*.o
+*.obj
+*.exe
+*.out
+
+# Директории сборки
+bin/
+obj/
+
+# Файлы Code::Blocks
+*.cbp
+*.depend
+*.layout
+
+# Файлы резервных копий
+*.bak
+
+# Makefile
+Makefile
+
+# Документация (если есть)
+README.md
+
+# IDE
+.vscode/
+.idea/
+
+# ОС
+.DS_Store
+Thumbs.db

@@ -3,15 +3,26 @@
 #include <sstream>
 #include "Parking.h"
 
+// Для поддержки русского языка в консоли Windows
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
 int main() {
+    // Установка кодовой страницы для поддержки русского языка в консоли Windows
+    #ifdef _WIN32
+    SetConsoleOutputCP(CP_UTF8);
+    SetConsoleCP(CP_UTF8);
+    #endif
+    
     // Создаем стоянку с вместимостью 10 автомобилей (можно изменить или сделать бесконечной)
     Parking parking(10);
     
-    std::cout << "Garage Parking Simulation\n";
-    std::cout << "Commands:\n";
-    std::cout << "  a <number> - Arrive car with license plate <number>\n";
-    std::cout << "  d <number> - Depart car with license plate <number>\n";
-    std::cout << "  q - Quit\n\n";
+    std::cout << "Моделирование гаражной стоянки\n";
+    std::cout << "Команды:\n";
+    std::cout << "  a <номер> - Прибытие автомобиля с номером <номер>\n";
+    std::cout << "  d <номер> - Отъезд автомобиля с номером <номер>\n";
+    std::cout << "  q - Выход\n\n";
     
     std::string input;
     while (true) {
@@ -28,7 +39,7 @@ int main() {
         iss >> command;
         
         if (command == "q" || command == "Q") {
-            std::cout << "Goodbye!\n";
+            std::cout << "До свидания!\n";
             break;
         } else if (command == "a" || command == "A") {
             int plateNumber;
@@ -36,17 +47,17 @@ int main() {
                 Car car(plateNumber);
                 parking.arrive(car);
             } else {
-                std::cout << "Invalid command format. Use: a <number>\n";
+                std::cout << "Неверный формат команды. Используйте: a <номер>\n";
             }
         } else if (command == "d" || command == "D") {
             int plateNumber;
             if (iss >> plateNumber) {
                 parking.depart(plateNumber);
             } else {
-                std::cout << "Invalid command format. Use: d <number>\n";
+                std::cout << "Неверный формат команды. Используйте: d <номер>\n";
             }
         } else {
-            std::cout << "Unknown command. Available commands: a, d, q\n";
+            std::cout << "Неизвестная команда. Доступные команды: a, d, q\n";
         }
         
         // Отображаем текущее состояние стоянки

@@ -1,35 +1,34 @@
+#include "smart_demo.h"
 #include <iostream>
-#include <string>
 #include <memory>  // Для smart-указателей
 #include <vector>
 #include "Car.h"
-#include "Parking.h"
 
 void demonstrateUniquePtr() {
-    std::cout << "=== Демонстрация unique_ptr ===\n";
+    std::cout << "=== Демонстрация Unique Pointer ===\n";
     
     // Создаем несколько объектов Car с использованием unique_ptr
     auto car1 = std::make_unique<Car>(123);
     auto car2 = std::make_unique<Car>(456);
     auto car3 = std::make_unique<Car>(789);
     
-    std::cout << "Созданы автомобили: " << *car1 << ", " << *car2 << ", " << *car3 << "\n";
+    std::cout << "Созданные автомобили: " << *car1 << ", " << *car2 << ", " << *car3 << "\n";
     
     // Применяем методы класса
     car1->incrementRemoveCount();
     car2->incrementRemoveCount();
     car2->incrementRemoveCount();
     
-    std::cout << "Увеличен счетчик удалений для автомобилей\n";
-    std::cout << "Счетчики удалений: " << car1->getRemoveCount() << ", " 
+    std::cout << "Увеличен счетчик перемещений для автомобилей\n";
+    std::cout << "Счетчики перемещений: " << car1->getRemoveCount() << ", " 
               << car2->getRemoveCount() << ", " << car3->getRemoveCount() << "\n";
     
     // unique_ptr автоматически удалят объекты при выходе из области видимости
-    std::cout << "unique_ptr автоматически удалят объекты при выходе из области видимости\n\n";
+    std::cout << "Unique указатели автоматически удаляют объекты при выходе из области видимости\n\n";
 }
 
 void demonstrateSharedPtr() {
-    std::cout << "=== Демонстрация shared_ptr ===\n";
+    std::cout << "=== Демонстрация Shared Pointer ===\n";
     
     // Создаем объект Car с использованием shared_ptr
     auto car = std::make_shared<Car>(999);
@@ -42,28 +41,28 @@ void demonstrateSharedPtr() {
     sharedCars.push_back(car);
     
     std::cout << "Создано несколько shared_ptr, указывающих на один объект\n";
-    std::cout << "Количество ссылок на объект: " << car.use_count() << "\n";
+    std::cout << "Счетчик ссылок: " << car.use_count() << "\n";
     
     // Применяем методы класса через разные указатели
     car->incrementRemoveCount();
     sharedCars[0]->incrementRemoveCount();
     sharedCars[1]->incrementRemoveCount();
     
-    std::cout << "Увеличен счетчик удалений через разные указатели\n";
-    std::cout << "Счетчик удалений: " << car->getRemoveCount() << "\n";
-    std::cout << "Количество ссылок на объект: " << car.use_count() << "\n";
+    std::cout << "Увеличен счетчик перемещений через разные указатели\n";
+    std::cout << "Счетчик перемещений: " << car->getRemoveCount() << "\n";
+    std::cout << "Счетчик ссылок: " << car.use_count() << "\n";
     
     // Удаляем указатели из вектора
     sharedCars.clear();
     std::cout << "Удалены указатели из вектора\n";
-    std::cout << "Количество ссылок на объект: " << car.use_count() << "\n";
+    std::cout << "Счетчик ссылок: " << car.use_count() << "\n";
     
     // shared_ptr автоматически удалит объект, когда счетчик ссылок достигнет нуля
-    std::cout << "shared_ptr автоматически удалит объект, когда счетчик ссылок достигнет нуля\n\n";
+    std::cout << "Shared указатели автоматически удаляют объект, когда счетчик ссылок достигает нуля\n\n";
 }
 
 void demonstrateWeakPtr() {
-    std::cout << "=== Демонстрация weak_ptr ===\n";
+    std::cout << "=== Демонстрация Weak Pointer ===\n";
     
     // Создаем объект Car с использованием shared_ptr
     auto car = std::make_shared<Car>(888);
@@ -75,12 +74,12 @@ void demonstrateWeakPtr() {
     
     // Проверяем, действителен ли weak_ptr
     if (auto sharedCar = weakCar.lock()) {
-        std::cout << "weak_ptr действителен: " << *sharedCar << "\n";
+        std::cout << "Weak указатель действителен: " << *sharedCar << "\n";
         sharedCar->incrementRemoveCount();
-        std::cout << "Увеличен счетчик удалений через weak_ptr\n";
-        std::cout << "Счетчик удалений: " << sharedCar->getRemoveCount() << "\n";
+        std::cout << "Увеличен счетчик перемещений через weak указатель\n";
+        std::cout << "Счетчик перемещений: " << sharedCar->getRemoveCount() << "\n";
     } else {
-        std::cout << "weak_ptr недействителен\n";
+        std::cout << "Weak указатель недействителен\n";
     }
     
     // Удаляем shared_ptr
@@ -89,21 +88,20 @@ void demonstrateWeakPtr() {
     
     // Проверяем, действителен ли weak_ptr после удаления shared_ptr
     if (auto sharedCar = weakCar.lock()) {
-        std::cout << "weak_ptr действителен: " << *sharedCar << "\n";
+        std::cout << "Weak указатель действителен: " << *sharedCar << "\n";
     } else {
-        std::cout << "weak_ptr недействителен (объект удален)\n";
+        std::cout << "Weak указатель недействителен (объект удален)\n";
     }
     
-    std::cout << "weak_ptr не увеличивает счетчик ссылок и не мешает удалению объекта\n\n";
+    std::cout << "Weak указатель не увеличивает счетчик ссылок и не препятствует удалению объекта\n\n";
 }
 
-int main() {
-    std::cout << "Лабораторная работа №8. Демонстрация smart-указателей\n\n";
+void demonstrateSmartPointers() {
+    std::cout << "Лабораторная работа №8. Демонстрация Smart Pointers\n\n";
     
     demonstrateUniquePtr();
     demonstrateSharedPtr();
     demonstrateWeakPtr();
     
-    std::cout << "Программа завершена\n";
-    return 0;
+    std::cout << "Демонстрация smart указателей завершена\n\n";
 }
